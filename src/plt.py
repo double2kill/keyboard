@@ -35,7 +35,4 @@ plt.grid(True)
 plt.xticks(rotation=45)
 
 # 保存图表为png
-plt.savefig('result.png', dpi=300, bbox_inches='tight')
-
-# 显示图表
-plt.show()
+plt.savefig('static/result.png', dpi=300, bbox_inches='tight')

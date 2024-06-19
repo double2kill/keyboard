@@ -1,3 +1,4 @@
+import os
 import keyboard
 from datetime import datetime
 import ast
@@ -11,11 +12,17 @@ except FileNotFoundError:
 write_counter = 0
 write_frequency = 10
 
-current_time_str = datetime.now().strftime("%Y%m%d%H%M%S")
-result_file_name = f"result_{current_time_str}.log"
+# 确保logs文件夹存在
+logs_folder = 'logs'
+if not os.path.exists(logs_folder):
+    os.makedirs(logs_folder)
 
 def on_any_key_up_event(e):
     global write_counter, key_count
+    current_time_str = datetime.now().strftime("%Y-%m-%d_%HH")
+
+    result_file_name = f"{logs_folder}/key_up_{current_time_str}.log"
+
     if e.scan_code == 54:
         key = 'left command'
     else:
@@ -27,7 +34,7 @@ def on_any_key_up_event(e):
             key_count[key] = key_count.get(key, 0) + 1
 
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            log_data = f"{current_time} - Key: {key}, Count: {key_count[key]}, e: {e}\n"
+            log_data = f"{current_time} --- Key: {key} --- Count: {key_count[key]} \n"
 
             with open(result_file_name, "a") as log_file:
                 log_file.write(log_data)
